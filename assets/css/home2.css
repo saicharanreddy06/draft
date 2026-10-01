@@ -1,0 +1,1452 @@
+@import url("global.css");
+
+/* =========================================
+   HOME V2 - PREMIUM LIGHT MODE
+   ========================================= */
+
+/* --- CORE & VARIABLES --- */
+:root {
+  --premium-bg: #FFFFFF;
+  --premium-surface: #F8F9FA;
+  --premium-text: #050505;
+  --premium-muted: #666666;
+  --premium-accent: #FF3300;
+  --premium-border: rgba(0, 0, 0, 0.08);
+  --easing-luxe: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body {
+  background-color: var(--premium-bg);
+  color: var(--premium-text);
+  overflow-x: hidden;
+  font-family: 'Inter', -apple-system, sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* --- CONTINUOUS LOOPING BACKGROUND ANIMATIONS (LIVE WALLPAPER EFFECT) --- */
+.ambient-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  /* overflow: hidden; Removed to fix Safari 3D flattening */
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  background: var(--premium-bg);
+}
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.4;
+  animation: float-ambient 25s infinite alternate ease-in-out;
+}
+.orb-primary {
+  width: 60vw; height: 60vw;
+  background: rgba(255, 51, 0, 0.08);
+  top: -10%; left: -20%;
+  animation-delay: 0s;
+}
+.orb-secondary {
+  width: 50vw; height: 50vw;
+  background: rgba(0, 0, 0, 0.03);
+  bottom: 10%; right: -10%;
+  animation-delay: -5s;
+}
+.orb-accent {
+  width: 40vw; height: 40vw;
+  background: rgba(255, 150, 0, 0.05);
+  top: 40%; left: 50%;
+  animation-delay: -10s;
+}
+
+@keyframes float-ambient {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  50% { transform: translate(5vw, 10vh) scale(1.1) rotate(10deg); }
+  100% { transform: translate(-5vw, -5vh) scale(0.9) rotate(-10deg); }
+}
+
+/* --- CONTINUOUS UI LOOPING ANIMATIONS --- */
+.spin-slow {
+  animation: spin 15s linear infinite;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.float-element {
+  animation: float-y 6s ease-in-out infinite alternate;
+}
+@keyframes float-y {
+  from { transform: translateY(0); }
+  to { transform: translateY(-20px); }
+}
+
+/* --- GLOBAL BUTTONS (HOVER & CLICK EFFECTS) --- */
+
+.btn-premium::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 150%; height: 150%;
+  background: var(--premium-accent);
+  transform: translate(-50%, -50%) scale(0);
+  border-radius: 50%;
+  transition: transform 0.6s var(--easing-luxe);
+  z-index: -1;
+}
+.btn-premium:hover::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+.btn-premium:hover {
+  color: #fff;
+  box-shadow: 0 15px 30px rgba(255, 51, 0, 0.2);
+}
+.btn-premium:active {
+  transform: scale(0.96);
+}
+
+
+.btn-premium-outline:hover {
+  background: var(--premium-text);
+  color: var(--premium-bg);
+}
+
+
+
+
+/* --- SECTION 1: INTERACTIVE GRID HERO --- */
+.grid-hero-section {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  height: 100vh;
+  min-height: 800px;
+  background-color: #dddddd; /* Grid border color */
+  overflow: hidden;
+}
+
+/* 1. The Matrix Setup */
+.interactive-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  width: 100%;
+  height: 100%;
+  gap: 2px; /* Border thickness */
+}
+
+.grid-cell {
+  background-color: #ffffff; /* Base cell color */
+  cursor: default; /* Advanced aesthetic cursor */
+  transition: background-color 1.2s ease-out; /* The fade-out trail */
+}
+
+.grid-cell:hover,
+.grid-cell:active {
+  background-color: var(--premium-accent); /* Instant Orange */
+  transition: background-color 0s;
+}
+
+/* 2. The Frosted Glass Layer */
+.glass-overlay {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(40px) saturate(120%);
+  -webkit-backdrop-filter: blur(40px) saturate(120%);
+  /* 3D Premium Glass Effect with a pinch of rainbow */
+  background: linear-gradient(135deg, rgba(255, 105, 180, 0.15) 0%, rgba(0, 255, 255, 0.15) 50%, rgba(255, 200, 0, 0.15) 100%); /* Slight frost tint */
+  pointer-events: none; /* Let mouse hit the grid */
+  z-index: 5;
+}
+
+/* 3. The Typography Overlay */
+.overlay-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; /* Let mouse hit the grid */
+  z-index: 10;
+  padding: 0 20px;
+}
+
+.hero-mega-text {
+  font-size: clamp(4rem, 10vw, 9rem);
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -4px;
+  color: #111;
+  margin: 0 0 25px 0;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* Global accent class replacing the inline style */
+.accent-text {
+  color: var(--premium-accent) !important;
+  -webkit-text-fill-color: var(--premium-accent);
+}
+
+.hero-sub-text {
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-weight: 600;
+  color: #555;
+  margin: 0 0 40px 0;
+  text-align: center;
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 20px;
+}
+
+/* Button specific overrides */
+.hero-actions 
+.hero-actions .btn-premium:hover { 
+  transform: translateY(-3px); 
+  box-shadow: 0 15px 30px rgba(255, 51, 0, 0.4); 
+}
+
+.hero-actions 
+.hero-actions .btn-premium-outline:hover { 
+  background: #111; 
+  color: #fff; 
+  transform: translateY(-3px); 
+}
+
+@media (max-width: 768px) {
+  .hero-actions { flex-direction: column; width: 100%; max-width: 300px; }
+  .hero-actions .btn-premium, .hero-actions 
+}
+
+/* --- SECTION 2: PRO-LEVEL DESIGNS (3D SCROLLING MARQUEE) --- */
+.designs-prm.marquee-section {
+  padding: 80px 0;
+  background: rgba(248, 249, 250, 0.4);
+  overflow: hidden;
+  position: relative;
+}
+.marquee-header {
+  text-align: center;
+  position: relative;
+  z-index: 10;
+  margin-bottom: 40px;
+}
+.marquee-header h2 {
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -2.5px;
+  background: linear-gradient(135deg, var(--premium-text) 0%, #555 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+}
+.marquee-header p {
+  font-size: 1.2rem;
+  color: var(--premium-muted);
+  font-weight: 600;
+}
+
+.marquee-3d-wrapper {
+  position: relative;
+  width: 120vw;
+  left: -10vw;
+  transform: perspective(1000px) rotateZ(-12deg) scale(1.1);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding: 100px 0;
+}
+
+.marquee-track {
+  width: max-content;
+  display: flex;
+}
+
+.marquee-content {
+  display: flex;
+  gap: 25px;
+}
+
+.track-left .marquee-content {
+  animation: scroll-left 40s linear infinite;
+}
+.track-right .marquee-content {
+  animation: scroll-right 40s linear infinite;
+}
+
+.marquee-card {
+  width: 600px;
+  height: 400px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.15);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  background: white;
+  flex-shrink: 0;
+  position: relative;
+}
+.marquee-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Pause and lift on hover */
+.marquee-card:hover {
+  transform: scale(1.05) translateY(-20px);
+  box-shadow: 0 60px 100px rgba(0,0,0,0.3);
+  z-index: 10;
+}
+
+
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes scroll-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* --- SECTION 3: GEAR UP BY SPORT (3D COVERFLOW) --- */
+.coverflow-section {
+  padding: 100px 0 150px;
+  background: #ffffff;
+  overflow: hidden;
+}
+.coverflow-section .section-header-prm h2 span.accent-text {
+  -webkit-text-fill-color: var(--premium-accent) !important;
+  color: var(--premium-accent) !important;
+}
+
+.section-header-prm h2 {
+  background: linear-gradient(135deg, #111 0%, #555 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.coverflow-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 480px;
+  perspective: 1500px;
+  /* Removed transform-style: preserve-3d from the wrapper because it can cause severe Z-fighting bugs in WebKit when combined with translateZ on children. */
+}
+.coverflow-card {
+  position: relative;
+  width: 260px;
+  height: 380px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:  0 20px 40px rgba(255,100,0,0.15);
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), z-index 0s linear;
+  /* Make them overlap slightly to eliminate dead zones between cards */
+  margin: 0 -15px; 
+  /* Default ambient state */
+  filter: brightness( 0.9 ) blur( 0px );
+  text-decoration: none;
+  z-index: 1;
+  /* Crucial for smooth scaling without jitter */
+  transform-origin: center center;
+  will-change: transform, filter;
+}
+
+/* Base tilted states */
+.coverflow-card:nth-child(1) { transform: rotateY(25deg) scale(0.9); }
+.coverflow-card:nth-child(2) { transform: rotateY(15deg) scale(0.95); }
+.coverflow-card:nth-child(3) { transform: rotateY(-15deg) scale(0.95); }
+.coverflow-card:nth-child(4) { transform: rotateY(-25deg) scale(0.9); }
+
+.coverflow-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.6s ease;
+}
+
+/* Inner content */
+
+/* Glassmorphism Icon Badge */
+.cf-icon-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  box-shadow: 0 10px 20px rgba(255,100,0,0.15);
+  z-index: 5;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+.coverflow-card:hover .cf-icon-badge {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.cf-content {
+  position: absolute;
+  bottom: -120px;
+  left: 0; right: 0;
+  padding: 80px 20px 40px;
+  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);
+  text-align: center;
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  opacity: 0;
+}
+.cf-content h3 {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.cf-btn {
+  display: inline-block;
+  padding: 12px 30px;
+  border: 2px solid var(--premium-accent);
+  background: transparent;
+  color: white;
+  text-transform: uppercase;
+  font-weight: 800;
+  border-radius: 30px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  pointer-events: none; /* Let the whole card be clickable without button edge cases */
+}
+
+/* --- THE PERFECT HOVER PHYSICS (Using modern :has selector) --- */
+/* 1. When ANY card is hovered, dim and push back the OTHERS */
+.coverflow-wrapper:has(.coverflow-card:hover) .coverflow-card:not(:hover) {
+  transform: rotateY(0deg) scale(0.85) translateZ(-50px);
+  filter: brightness(0.6) blur(5px) opacity(0.7);
+  z-index: 0;
+}
+
+/* 2. The specific card being hovered snaps forward flawlessly */
+.coverflow-wrapper .coverflow-card:hover {
+  transform: rotateY(0deg) scale(1.15) translateZ(100px);
+  filter: brightness(1) blur(0px);
+  z-index: 100;
+  box-shadow: 0 40px 100px rgba(255, 100, 0, 0.4), 0 0 80px rgba(255, 60, 0, 0.6);
+  /* The z-index transition must be instant on hover so it pops over neighbors immediately */
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.coverflow-wrapper .coverflow-card:hover 
+/* Glassmorphism Icon Badge */
+.cf-icon-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  box-shadow: 0 10px 20px rgba(255,100,0,0.15);
+  z-index: 5;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+.coverflow-card:hover .cf-icon-badge {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.cf-content {
+  bottom: 0;
+  opacity: 1;
+}
+
+.coverflow-wrapper .coverflow-card:hover .cf-btn {
+  background: var(--premium-accent);
+}
+
+/* Mobile Fallback */
+@media (max-width: 1024px) {
+  .coverflow-section .section-header-prm h2 span.accent-text {
+  -webkit-text-fill-color: var(--premium-accent) !important;
+  color: var(--premium-accent) !important;
+}
+
+.section-header-prm h2 {
+  background: linear-gradient(135deg, #111 0%, #555 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.coverflow-wrapper {
+    flex-direction: column;
+    height: auto;
+    gap: 25px;
+    perspective: none;
+  }
+  .coverflow-card, .coverflow-card:nth-child(n) {
+    transform: none !important;
+    filter: none !important;
+    width: 90%;
+    max-width: 400px;
+    margin: 0;
+  }
+  
+/* Glassmorphism Icon Badge */
+.cf-icon-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  box-shadow: 0 10px 20px rgba(255,100,0,0.15);
+  z-index: 5;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+.coverflow-card:hover .cf-icon-badge {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.cf-content {
+    bottom: 0;
+    opacity: 1;
+  }
+}
+
+/* --- SECTION 4: HOW IT WORKS --- */
+.process-section-clean {
+  padding: 70px 0;
+  background: rgba(248, 249, 250, 0.4); /* Crisp Light Mode Background */
+  overflow: hidden;
+}
+.process-grid-clean {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+  perspective: 1500px; /* Enable 3D Space */
+}
+.process-card-clean {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.03);
+  position: relative;
+  /* 3D Transform Settings */
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.6s ease;
+  will-change: transform;
+}
+
+/* The 3D Parallax Lift */
+.process-card-clean:hover {
+  /* Lift up, tilt back slightly, and rotate subtly */
+  transform: translateY(-15px) rotateX(6deg) rotateY(-4deg);
+  box-shadow: 25px 35px 60px rgba(0,0,0,0.08), -10px 10px 20px rgba(255,51,0,0.03);
+}
+
+
+
+/* Image Container Parallax & Inner Glare */
+.pcc-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 35px;
+  background: rgba(238, 238, 238, 0.4);
+  transform: translateZ(0px);
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.6s ease;
+}
+
+.pcc-img-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -150%; width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+  transform: skewX(-25deg);
+  z-index: 10;
+  pointer-events: none;
+  transition: left 0s;
+}
+
+.process-card-clean:hover .pcc-img-wrap::after {
+  left: 200%;
+  transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.process-card-clean:hover .pcc-img-wrap {
+  transform: translateZ(40px); /* Physically pops forward out of the card */
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+.pcc-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.process-card-clean:hover .pcc-img-wrap img {
+  transform: scale(1.1);
+}
+
+/* Step Number Badge Physics */
+.pcc-number {
+  position: absolute;
+  top: 20px; right: 20px;
+  width: 50px; height: 50px;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 50%;
+  display: flex; justify-content: center; align-items: center;
+  font-weight: 900; font-size: 1.2rem; color: #111;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: translateZ(10px);
+}
+.process-card-clean:hover .pcc-number {
+  background: var(--premium-accent);
+  color: white;
+  /* Massive 3D pop and 360 spin */
+  transform: translateZ(60px) rotate(360deg) scale(1.1);
+  box-shadow: 0 15px 30px rgba(255,51,0,0.4);
+}
+
+/* Text Content Parallax */
+.pcc-content {
+  padding: 0 15px 15px;
+  transform: translateZ(0px);
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.process-card-clean:hover .pcc-content {
+  transform: translateZ(30px); /* Text floats off the card */
+}
+.pcc-content h3 {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #111;
+  margin-bottom: 15px;
+  letter-spacing: -0.5px;
+  transition: color 0.3s ease;
+}
+.process-card-clean:hover .pcc-content h3 {
+  color: var(--premium-accent);
+}
+.pcc-content p {
+  font-size: 1.15rem;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .process-grid-clean {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+/* --- SECTION 5: BULK PROMO --- */
+.bulk-prm-interactive {
+  padding: 70px 0;
+  position: relative;
+  overflow: hidden;
+  /* The Base Image */
+  background-color: rgba(248, 249, 250, 0.4);
+  background-image: url('../images/athlete_basketball_huddle.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Layer 1: Concentrated Light Hotspots */
+.bulk-prm-interactive::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Massive glowing light spots to concentrate through the glass */
+  background: 
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.9) 0%, transparent 40%),
+    radial-gradient(circle at 70% 80%, rgba(255, 102, 0, 0.4) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.5) 0%, transparent 60%);
+  z-index: 0;
+  mix-blend-mode: color-dodge; /* Creates intense, bright light concentrations */
+}
+
+/* Layer 2: The Prism Glass Filter */
+.bulk-prm-interactive::after {
+  content: '';
+  position: absolute;
+  inset: -20px; /* Oversized to prevent edge fringing */
+  /* Semi-transparent physical glass surface */
+  background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.3) 100%);
+  /* The optical magic: blur + heavy saturation and contrast forces highlights to bloom */
+  backdrop-filter: blur(35px) saturate(220%) brightness(1.2) contrast(1.1);
+  -webkit-backdrop-filter: blur(35px) saturate(220%) brightness(1.2) contrast(1.1);
+  z-index: 1;
+}
+
+.bulk-prm-interactive .container {
+  position: relative;
+  z-index: 5;
+}
+
+.bulk-holo-wrapper {
+  max-width: 1250px;
+  margin: 0 auto;
+}
+
+.bulk-holo-card {
+  background: #050505;
+  border-radius: 32px;
+  padding: 50px 70px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.15), inset 0 2px 0 rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* The Holographic Shimmer */
+.holo-glare {
+  position: absolute;
+  top: 0; left: -150%; width: 150%; height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.05) 35%,
+    rgba(255, 255, 255, 0.15) 45%,
+    rgba(255, 102, 0, 0.2) 50%,
+    rgba(255, 255, 255, 0.15) 55%,
+    rgba(255, 255, 255, 0.05) 65%,
+    transparent 80%
+  );
+  pointer-events: none;
+  z-index: 5;
+  transition: left 0s;
+}
+
+/* Hover Physics - NO TILT */
+.bulk-holo-card:hover {
+  transform: translateY(-8px); 
+  box-shadow: 0 40px 80px rgba(0,0,0,0.25), 0 10px 30px rgba(255,51,0,0.1);
+  border-color: rgba(255,100,0,0.2);
+}
+.bulk-holo-card:hover .holo-glare {
+  left: 150%;
+  transition: left 1s ease-in-out;
+}
+
+/* WIDE Content Layout */
+.holo-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+}
+.holo-left {
+  flex: 1;
+  max-width: 55%;
+}
+.holo-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.holo-badge {
+  display: inline-block;
+  background: rgba(255,51,0,0.1);
+  border: 1px solid rgba(255,51,0,0.3);
+  color: var(--premium-accent);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  margin-bottom: 25px;
+}
+
+.holo-content h2 {
+  font-size: 3.5rem; 
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 15px;
+  letter-spacing: -1px;
+}
+.holo-content h2 span {
+  background: linear-gradient(135deg, var(--premium-accent) 0%, #ffaa00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.holo-content p {
+  color: #aaa;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* Tier Boxes Display */
+.holo-tiers {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+.tier-box {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 15px 25px; 
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+.tier-box:hover {
+  background: rgba(255,51,0,0.1);
+  border-color: var(--premium-accent);
+  transform: translateY(-4px);
+}
+.t-qty {
+  color: #fff;
+  font-size: 1.5rem; 
+  font-weight: 900;
+  margin-bottom: 3px;
+}
+.t-off {
+  color: var(--premium-accent);
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.holo-btn {
+  display: inline-block;
+  padding: 14px 40px;
+  background: #fff;
+  color: #000;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 1rem;
+  border-radius: 30px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+.holo-btn:hover {
+  background: var(--premium-accent);
+  color: #fff;
+  box-shadow: 0 10px 25px rgba(255,51,0,0.3);
+}
+
+/* Decorative Orbs */
+.holo-dec-1, .holo-dec-2 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px); 
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.4;
+  transition: all 0.5s ease;
+}
+.holo-dec-1 {
+  width: 250px; height: 250px; 
+  background: var(--premium-accent);
+  top: -50px; left: -50px; /* Moved to left for balance */
+}
+.holo-dec-2 {
+  width: 300px; height: 300px; 
+  background: rgba(255, 150, 0, 0.3);
+  bottom: -80px; right: -50px;
+}
+.bulk-holo-card:hover .holo-dec-1 {
+  transform: scale(1.1) translate(10px, 10px);
+  opacity: 0.6;
+}
+
+@media (max-width: 900px) {
+  .holo-content { flex-direction: column; align-items: flex-start; }
+  .holo-left { max-width: 100%; margin-bottom: 30px; }
+  .holo-right { align-items: flex-start; }
+  .bulk-holo-card { padding: 40px; }
+}
+
+/* --- SECTION 6: OFFER SCROLL MARQUEE --- */
+.offer-marquee-section {
+  background: #000;
+  padding: 25px 0; /* Standard thin footprint */
+  overflow: hidden;
+  position: relative;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.offer-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: offer-scroll-fast 20s linear infinite;
+  will-change: transform;
+}
+
+
+
+.offer-marquee-content {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.offer-marquee-content span {
+  font-size: 1.8rem;
+  font-weight: 900;
+  font-style: italic;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 30px;
+}
+
+/* Screaming Creative Effects */
+
+/* 1. The Strobe Box */
+.strobe-box {
+  background: var(--premium-accent);
+  color: #000 !important;
+  padding: 4px 12px;
+  border-radius: 4px;
+  margin-left: 10px !important;
+  display: inline-block;
+  animation: strobe-flash 0.4s infinite alternate;
+}
+@keyframes strobe-flash {
+  0% { background: var(--premium-accent); color: #000; box-shadow: 0 0 15px var(--premium-accent); }
+  100% { background: #fff; color: #000; box-shadow: 0 0 25px #fff; }
+}
+
+/* 2. Flowing Lava Text */
+.lava-text {
+  background: linear-gradient(90deg, #ff3300, #ffaa00, #fffb00, #ffaa00, #ff3300);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent !important;
+  animation: lava-flow 2s linear infinite;
+}
+@keyframes lava-flow {
+  to { background-position: 200% center; }
+}
+
+/* 3. Pulsing Neon Separator */
+.offer-marquee-content .sep {
+  font-size: 2rem;
+  margin: 0;
+  animation: neon-pulse 0.5s infinite alternate;
+}
+@keyframes neon-pulse {
+  0% { text-shadow: 0 0 10px rgba(255,51,0,1), 0 0 25px rgba(255,51,0,1); color: var(--premium-accent); }
+  100% { text-shadow: none; color: #333; }
+}
+
+@keyframes offer-scroll-fast {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (max-width: 768px) {
+  .offer-marquee-section { padding: 15px 0; }
+  .offer-marquee-content span { font-size: 1.2rem; margin: 0 15px; }
+  .offer-marquee-content .sep { font-size: 1.5rem; }
+}
+
+/* --- SECTION 7: WALL OF CHAMPIONS --- */
+.champions-magazine {
+  padding: 70px 0;
+  background: #ffffff; /* Pure white background for high-end editorial feel */
+  overflow: hidden;
+}
+
+.mag-container {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  max-width: 1400px;
+}
+
+/* Left Side Imagery */
+.mag-left {
+  flex: 1;
+  position: relative;
+}
+
+.mag-img-wrapper {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+.mag-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.mag-left:hover .mag-img-wrapper img {
+  transform: scale(1.05); /* Subtle smooth zoom on hover */
+}
+
+/* Floating Stats Badge */
+.mag-floating-badge {
+  position: absolute;
+  bottom: 40px;
+  right: -30px; /* Breaks out of the image container slightly */
+  background: #000;
+  color: #fff;
+  padding: 30px 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 5;
+  transition: transform 0.4s ease;
+}
+.mag-left:hover .mag-floating-badge {
+  transform: translateY(-10px);
+}
+.badge-num {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--premium-accent);
+  line-height: 1;
+  margin-bottom: 5px;
+}
+.badge-text {
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Right Side Reviews */
+.mag-right {
+  flex: 1;
+  padding-right: 40px;
+}
+.mag-right .section-header-prm {
+  text-align: center; /* Centered headers */
+  margin-bottom: 30px;
+}
+.mag-right .section-header-prm h2 span.accent-text {
+  -webkit-text-fill-color: var(--premium-accent) !important;
+  color: var(--premium-accent) !important;
+}
+
+.section-header-prm h2 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.mag-review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* Review Item Styling */
+.mag-review-item {
+  display: flex;
+  gap: 25px;
+  position: relative;
+  padding-bottom: 25px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
+}
+.mag-review-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.mag-review-item:hover {
+  transform: translateX(10px); /* Slides right slightly on hover */
+}
+
+/* Massive Quote Mark */
+.mag-q-mark {
+  font-family: serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: rgba(255,51,0,0.15); /* Very faint orange */
+  line-height: 0.8;
+  margin-top: -10px;
+  transition: color 0.3s ease;
+}
+.mag-review-item:hover .mag-q-mark {
+  color: var(--premium-accent);
+}
+
+.mag-rev-body {
+  flex: 1;
+}
+
+.mag-stars {
+  color: var(--premium-accent);
+  font-size: 1.2rem;
+  letter-spacing: 3px;
+  margin-bottom: 15px;
+}
+
+.mag-quote {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
+}
+
+.mag-author {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #111;
+  text-transform: uppercase;
+  margin: 0;
+}
+.mag-title {
+  font-weight: 500;
+  color: #777;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+@media (max-width: 1024px) {
+  .mag-container { flex-direction: column; gap: 60px; }
+  .mag-left { width: 100%; }
+  .mag-floating-badge { right: 20px; }
+  .mag-right { padding-right: 0; }
+  .mag-right .section-header-prm h2 span.accent-text {
+  -webkit-text-fill-color: var(--premium-accent) !important;
+  color: var(--premium-accent) !important;
+}
+
+.section-header-prm h2 { font-size: 3rem; }
+}
+
+/* --- SECTION 8: FINAL CTA --- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.btn-arrow {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+
+
+@media (max-width: 768px) {
+  
+  
+}
+
+/* --- SECTION 8: FINAL CTA --- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.btn-arrow {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+
+
+@media (max-width: 768px) {
+  
+  
+}
+
+/* --- RESPONSIVE MEDIA QUERIES --- */
+@media (max-width: 1024px) {
+
+  .accordion-container {
+    flex-direction: column;
+    height: 900px;
+  }
+  .accordion-panel {
+    flex: 1;
+  }
+  .accordion-panel:hover {
+    flex: 3;
+  }
+  .accordion-vertical-title {
+    transform: translateX(-50%);
+    bottom: 20px;
+    letter-spacing: 5px;
+    font-size: 1.2rem;
+  }
+  .accordion-content h3 {
+    font-size: 2.5rem;
+  }
+
+}
+
+@media (max-width: 767px) {
+  .marquee-card {
+    width: 300px;
+    height: 200px;
+  }
+}
+
+
+/* Desktop Standard: up to 1920px (handled by max-width containers) */
+
+/* Tablet (iPad Mini): 768px to 1024px */
+@media (max-width: 1024px) {
+
+  .printer-chassis { width: 80vw; }
+  .print-output-wrapper { width: 50vw; margin-top: -16vw; }
+
+  .designs-gallery {
+    flex-wrap: wrap;
+  }
+  .design-card-prm {
+    flex: 1 1 45%;
+  }
+  .process-line {
+    left: 40px;
+  }
+  .process-step-prm, .process-step-prm:nth-child(even) {
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-left: 100px;
+  }
+  .process-dot {
+    position: absolute;
+    left: 28px; /* centering on the line */
+  }
+  .process-content {
+    width: 100%;
+  }
+  .testi-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Mobile (Samsung Galaxy S8+): 360px to 767px */
+@media (max-width: 767px) {
+
+  .printer-chassis { width: 95vw; top: 0; }
+  .print-output-wrapper { width: 70vw; margin-top: -18vw; height: 70vh; }
+
+  .design-card-prm {
+    flex: 1 1 100%;
+    height: 400px;
+  }
+  .sports-grid {
+    grid-template-columns: 1fr;
+  }
+  .bulk-glass {
+    margin: 20px;
+    padding: 30px;
+  }
+  .testi-grid {
+    grid-template-columns: 1fr;
+  }
+  .cta-prm h2 {
+    font-size: 2.5rem;
+  }
+}
+
+
+/* --- AMBIENT 3D GLASS SPORTS BALLS --- */
+.ambient-glass-space {
+  position: absolute;
+  top: 100vh;
+  left: 0;
+  width: 100%;
+  height: 500vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0; /* Deep in the background, behind all content and cards */
+}
+
+/* Ensure all sections sit above the glass balls */
+section {
+  position: relative;
+  z-index: 10;
+}
+/* Except the hero section, which is strictly separated */
+.grid-hero-section {
+  z-index: 20;
+}
+
+.glass-ball {
+  position: absolute;
+  border-radius: 50%;
+  
+  /* 3D Premium Glass Effect */
+  /* 3D Premium Glass Effect with a pinch of rainbow */
+  background: linear-gradient(135deg, rgba(255, 105, 180, 0.15) 0%, rgba(0, 255, 255, 0.15) 50%, rgba(255, 200, 0, 0.15) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 
+    inset 15px 15px 40px rgba(255, 255, 255, 0.6),
+    inset -10px -10px 20px rgba(0, 0, 0, 0.05),
+    0 30px 60px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Basketball Engraving */
+.glass-ball.basketball::before {
+  content: ''; position: absolute; width: 100%; height: 100%;
+  border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.3); transform: scale(0.95);
+}
+.glass-ball.basketball::after {
+  content: ''; position: absolute; width: 100%; height: 100%;
+  border-radius: 50%;
+  border-left: 2px solid rgba(255, 255, 255, 0.3);
+  border-right: 2px solid rgba(255, 255, 255, 0.3);
+  transform: scale(0.95) rotate(45deg);
+}
+
+/* Tennis Ball Engraving */
+.glass-ball.tennis::before {
+  content: ''; position: absolute; width: 60%; height: 120%;
+  border-radius: 50%; border-right: 3px solid rgba(255, 255, 255, 0.4); left: -20%;
+}
+.glass-ball.tennis::after {
+  content: ''; position: absolute; width: 60%; height: 120%;
+  border-radius: 50%; border-left: 3px solid rgba(255, 255, 255, 0.4); right: -20%;
+}
+
+/* Generic Ball Engraving (Dimples) */
+.glass-ball.generic::after {
+  content: ''; position: absolute; inset: 10%;
+  background-image: radial-gradient(rgba(255,255,255,0.2) 2px, transparent 2px);
+  background-size: 20px 20px;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+/* Slow Floating Animations */
+@keyframes float-up { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-120px) rotate(90deg); } }
+@keyframes float-down { 0% { transform: translateY(0) rotate(0deg) scale(1); } 100% { transform: translateY(100px) rotate(-60deg) scale(1.1); } }
+
+/* Positioning the 8 balls throughout the page */
+.gb-1 { width: 300px; height: 300px; top: 5%; left: -5%; animation: float-up 20s ease-in-out infinite alternate; }
+.gb-2 { width: 180px; height: 180px; top: 15%; right: 5%; animation: float-down 15s ease-in-out infinite alternate; }
+.gb-3 { width: 400px; height: 400px; top: 30%; left: 15%; animation: float-down 25s ease-in-out infinite alternate-reverse; opacity: 0.6; }
+.gb-4 { width: 220px; height: 220px; top: 45%; right: -5%; animation: float-up 18s ease-in-out infinite alternate; }
+.gb-5 { width: 260px; height: 260px; top: 60%; left: -2%; animation: float-down 22s ease-in-out infinite alternate; }
+.gb-6 { width: 150px; height: 150px; top: 75%; right: 10%; animation: float-up 14s ease-in-out infinite alternate-reverse; }
+.gb-7 { width: 350px; height: 350px; top: 85%; left: 10%; animation: float-up 28s ease-in-out infinite alternate; opacity: 0.5; }
+.gb-8 { width: 200px; height: 200px; top: 95%; right: 5%; animation: float-down 16s ease-in-out infinite alternate; }
+

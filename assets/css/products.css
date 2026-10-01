@@ -1,0 +1,344 @@
+@import url("global.css");
+
+/* =========================================
+   PRODUCTS HERO
+   ========================================= */
+.products-hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-image: linear-gradient(135deg, rgba(5, 5, 8, 0.8) 0%, rgba(13, 13, 24, 0.8) 50%, rgba(16, 10, 5, 0.8) 100%), url('../images/fabric_premium.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+.products-hero::before,
+.products-hero::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.6;
+  z-index: 0;
+  animation: heroOrb 18s infinite alternate ease-in-out;
+}
+.products-hero::before {
+  width: 55vw;
+  height: 55vw;
+  max-width: 700px;
+  max-height: 700px;
+  background: radial-gradient(circle, rgba(255, 68, 0, 0.5), transparent 70%);
+  top: -15%;
+  left: -10%;
+}
+.products-hero::after {
+  width: 45vw;
+  height: 45vw;
+  max-width: 600px;
+  max-height: 600px;
+  background: radial-gradient(circle, rgba(0, 100, 255, 0.35), transparent 70%);
+  bottom: -15%;
+  right: -10%;
+  animation-delay: -9s;
+}
+
+.products-hero .floating-bg-elements {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.products-hero .geo {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
+  animation: geoFloat 12s ease-in-out infinite alternate;
+}
+
+.products-hero .geo-1 { width: 140px; height: 140px; top: 15%; left: 8%; animation-duration: 14s; }
+.products-hero .geo-2 { width: 90px;  height: 90px;  top: 60%; right: 12%; animation-duration: 11s; animation-delay: -4s; border-radius: 12px; }
+.products-hero .geo-3 { width: 60px;  height: 60px;  bottom: 20%; left: 60%; animation-duration: 9s; animation-delay: -7s; }
+
+.products-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: white;
+  padding: 0 var(--spacing-md);
+}
+
+.products-hero-eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #FF5500;
+  border: 1px solid rgba(255, 68, 0, 0.4);
+  padding: 6px 18px;
+  border-radius: 50px;
+  margin-bottom: 24px;
+  animation: fadeInUp 0.8s ease both;
+}
+
+.products-hero-title {
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 900;
+  line-height: 1.0;
+  letter-spacing: -2px;
+  margin-bottom: 20px;
+  color: #ffffff;
+  animation: fadeInUp 1s ease 0.15s both;
+}
+
+.products-hero-title span {
+  color: #FF5500;
+}
+
+.products-hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 560px;
+  margin: 0 auto 36px;
+  line-height: 1.6;
+  animation: fadeInUp 1s ease 0.3s both;
+}
+
+.products-hero-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 1s ease 0.45s both;
+}
+
+.products-hero .btn-outline {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+.products-hero .btn-outline:hover {
+  background: #ffffff;
+  color: var(--color-secondary);
+  border-color: #ffffff;
+}
+
+
+
+
+/* CSS for products.html */
+
+
+/* MIGRATED INLINE STYLES FOR PRODUCTS */
+.refactored-inline-49 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+.refactored-inline-50 { background: url('../assets/images/featured_soccer.jpg') center/cover; height: 300px; border-radius: 10px; display: flex; align-items: flex-end; padding: 20px; }
+.refactored-inline-51 { color: white; font-size: 24px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
+.refactored-inline-52 { background: url('../assets/images/featured_basketball.jpg') center/cover; height: 300px; border-radius: 10px; display: flex; align-items: flex-end; padding: 20px; }
+.refactored-inline-53 { background: url('../assets/images/hero_daylight.jpg') center/cover; height: 300px; border-radius: 10px; display: flex; align-items: flex-end; padding: 20px; }
+
+/* =========================================
+   PRODUCTS GRID & CARDS (Project-33 Light Mode Style)
+   ========================================= */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 40px 0;
+}
+
+.product-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid rgba(0,0,0,0.03);
+  overflow: hidden;
+  position: relative;
+}
+
+.product-card:hover {
+  box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+  transform: translateY(-5px);
+}
+
+.card-img-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: #f8f9fa;
+  aspect-ratio: 1/1;
+}
+
+.card-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.product-card:hover .card-img-container img {
+  transform: scale(1.05);
+}
+
+.quick-add-drawer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.8);
+  transform: translateY(101%);
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+}
+
+.product-card:hover .quick-add-drawer {
+  transform: translateY(0);
+}
+
+.quick-add-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: var(--color-primary);
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+  transition: opacity 0.3s, transform 0.2s;
+  cursor: pointer;
+}
+
+.quick-add-btn:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+.size-selector {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.size-pill {
+  background: white;
+  color: #1a2530;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid #dee2e6;
+  transition: background 0.2s, transform 0.2s, color 0.2s, border-color 0.2s;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.size-pill:hover {
+  background: var(--color-primary);
+  color: white;
+  border-color: #FF5500;
+  transform: translateY(-2px);
+}
+
+.card-body {
+  padding: 24px;
+}
+
+.product-badge {
+  background: var(--color-primary);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.product-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-secondary);
+  margin-bottom: 6px;
+}
+
+.product-price {
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  margin: 0;
+}
+
+
+/* PAGE HEADER STYLES (Copied from about.css) */
+.page-header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(255, 255, 255, 0.35); /* High-opacity white tint */
+  z-index: 1;
+}
+.page-header .container {
+  position: relative;
+  z-index: 2;
+  animation: blurIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+.page-header h1 {
+  color: var(--color-secondary);
+  font-size: 80px;
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -2px;
+}
+.page-header h1 span {
+  color: #FF5500;
+}
+.page-header p {
+  font-size: 24px;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6); /* Added shadow for readability */
+  font-weight: 500;
+  max-width: 800px;
+  margin: 0 auto 30px auto;
+}
+.page-header h1 {
+    font-size: 36px;
+  }
+.page-header {
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-image: url('../images/about_hero.jpg');
+  background-size: cover;
+  background-position: center;
+  /* background-attachment: fixed; removed for performance */
+  color: var(--color-text);
+  text-align: center;
+  position: relative;
+}
